@@ -141,14 +141,15 @@ def transform(X_train, test_sample, bin_class_cols, bin_class, ohenc_col, mlb_co
         test_sample[col] = 0
 
     return test_sample # as a value 
-
-test_sample = pd.DataFrame({'online_order': online_order, 'book_table': book_table, 'location': location, 'rest_type': rest_type, 
-                            'avg_cost': avg_cost, 'type': type, 'dish_liked': dish_liked, 'cuisines': cuisines}, index= [0]) 
+ 
 # model
 m = pickle.load(open('DT.pkl', 'rb'))
 
 # show the prediction when pressing the button
 if st.button('Predict'):
+    
+    test_sample = pd.DataFrame({'online_order': online_order, 'book_table': book_table, 'location': location, 'rest_type': rest_type, 
+                            'avg_cost': avg_cost, 'type': type, 'dish_liked': dish_liked, 'cuisines': cuisines}, index= [0])        
     res_smpl = transform(X_train, test_sample, bin_class_cols, bin_class, ohenc_col, mlb_cols, mlb_trans_sample, sc_col, sc)
     prediction = m.predict(res_smpl)[0]
     # yes means successful restaurant
